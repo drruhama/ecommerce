@@ -1,13 +1,16 @@
 package main
 
 import (
+	"ecommerce/auth"
 	"ecommerce/database"
+	"ecommerce/utility"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
 
-	//"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5"
+	//"github.com/go-chi/chi"
 	"github.com/joho/godotenv"
 )
 
@@ -44,9 +47,17 @@ func main() {
 	if db == nil {
 		panic("db not conncected")
 	}
-	//router := chi.NewRouter()
-	//menu.Register(router, db)
+	// ======= UPDATE =======
+	utility.InitToken("INI_SECRET", 1*60)
+	// ======================
+	router := chi.NewRouter()
+
+	auth.Register2(router, db)
+
+	// ======= UPDATE =======
+	auth.Register2(router, db)
+	// ======================
 	const port = ":8000"
 	log.Println("Server running at port", port)
-	http.ListenAndServe(port, nil)
+	http.ListenAndServe(port, router)
 }
