@@ -16,7 +16,7 @@ func Register2(router *chi.Mux, db *sql.DB) {
 	// seperti grouping endpoint
 	// jadi yang ada di dalamnya sudah memiliki endpoint /api/auth
 	// sebagai dasarnya
-	router.Route("/ECOMMERCE/auth", func(r chi.Router) {
+	router.Route("/ecommerce/auth", func(r chi.Router) {
 		r.Post("/signup", handler.Register)
 		r.Post("/signin", handler.Login)
 	})
